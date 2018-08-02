@@ -1,21 +1,44 @@
 #include "TXLib.h"
 
+void drawQuestion(const char* text)
+{
+    txSetFillColor(TX_RED);
+    txRectangle(100, 0, 800, 100);
+    txDrawText(100, 0, 800, 100, text);
+}
+
+void drawAnswer(int x1, int y1, int x2, int y2, const char* text)
+{
+    txRectangle(x1, y1, x2, y2);
+    txDrawText(x1, y1, x2, y2, text);
+}
+
 int main()
 {
     txCreateWindow(900, 600);
 
     //“екст вопроса
-    txSetFillColor(TX_RED);
-    txRectangle(100, 0, 800, 100);
-    txDrawText(100, 0, 800, 100, "Ёто вопрос");
+    txSetFillColor(TX_BLACK);
+    txClear();
+    drawQuestion("Ёто вопрос");
+    drawAnswer(100, 250, 300, 350, "Ёто ответ1");
+    drawAnswer(600, 250, 800, 350, "Ёто ответ2");
+    txSleep(3000);
 
-    //“екст ответа 1
-    txRectangle(100, 250, 300, 350);
-    txDrawText(100, 250, 300, 350, "Ёто ответ1");
+    txSetFillColor(TX_BLACK);
+    txClear();
+    drawQuestion("Ёто вопрос2");
+    drawAnswer(100, 250, 300, 350, " ответ1");
+    drawAnswer(600, 250, 800, 350, " ответ2");
+    txSleep(3000);
 
-    //“екст ответа 2
-    txRectangle(600, 250, 800, 350);
-    txDrawText(600, 250, 800, 350, "Ёто ответ2");
+    txSetFillColor(TX_BLACK);
+    txClear();
+    drawQuestion("Ёто вопрос3");
+    drawAnswer(100, 250, 300, 350, "Ёто ответ1");
+    drawAnswer(600, 250, 800, 350, "Ёто ответ2");
+    txSleep(3000);
+
 
     return 0;
 }
