@@ -1,5 +1,14 @@
 #include "TXLib.h"
 
+struct Answer
+{
+    int x1;
+    int y1;
+    int x2;
+    int y2;
+    const char* text;
+};
+
 void drawQuestion(const char* text)
 {
     txSetFillColor(TX_RED);
@@ -7,10 +16,10 @@ void drawQuestion(const char* text)
     txDrawText(100, 0, 800, 100, text);
 }
 
-void drawAnswer(int x1, int y1, int x2, int y2, const char* text)
+void drawAnswer(Answer ans)
 {
-    txRectangle(x1, y1, x2, y2);
-    txDrawText(x1, y1, x2, y2, text);
+    txRectangle(ans.x1, ans.y1, ans.x2, ans.y2);
+    txDrawText(ans.x1, ans.y1, ans.x2, ans.y2, ans.text);
 }
 
 int main()
@@ -21,22 +30,28 @@ int main()
     txSetFillColor(TX_BLACK);
     txClear();
     drawQuestion("Это вопрос");
-    drawAnswer(100, 250, 300, 350, "Это ответ1");
-    drawAnswer(600, 250, 800, 350, "Это ответ2");
+    Answer ans1 = {100, 250, 300, 350, "Это ответ1"};
+    Answer ans2 = {600, 250, 800, 350, "Это ответ2"};
+    drawAnswer(ans1);
+    drawAnswer(ans2);
     txSleep(3000);
 
     txSetFillColor(TX_BLACK);
     txClear();
     drawQuestion("Это вопрос2");
-    drawAnswer(100, 250, 300, 350, " ответ1");
-    drawAnswer(600, 250, 800, 350, " ответ2");
+    ans1 = {100, 250, 300, 350, " ответ1"};
+    ans2 = {600, 250, 800, 350, " ответ2"};
+    drawAnswer(ans1);
+    drawAnswer(ans2);
     txSleep(3000);
 
     txSetFillColor(TX_BLACK);
     txClear();
     drawQuestion("Это вопрос3");
-    drawAnswer(100, 250, 300, 350, "Это ответ1");
-    drawAnswer(600, 250, 800, 350, "Это ответ2");
+    ans1 = {100, 250, 300, 350, "Это ответ1"};
+    ans2 = {600, 250, 800, 350, "Это ответ2"};
+    drawAnswer(ans1);
+    drawAnswer(ans2);
     txSleep(3000);
 
 
