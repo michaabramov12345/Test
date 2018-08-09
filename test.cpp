@@ -28,17 +28,9 @@ void drawQuestion(Question que)
     txRectangle(100, 0, 800, 100);
     txDrawText(100, 0, 800, 100, que.text);
 
-    if (que.count_answers > 0)
+    for (int nomer = 0; nomer < que.count_answers; nomer++)
     {
-        drawAnswer(que.ans[0]);
-    }
-    if (que.count_answers > 1)
-    {
-        drawAnswer(que.ans[1]);
-    }
-    if (que.count_answers > 2)
-    {
-        drawAnswer(que.ans[2]);
+        drawAnswer(que.ans[nomer]);
     }
 }
 
