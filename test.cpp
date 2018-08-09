@@ -69,17 +69,19 @@ int main()
         txClear();
         drawQuestion(que[nomer_voprosa]);
 
-        //Человечек
-        txCircle(txMouseX(), txMouseY(), 12);
-
-        if (
-            txMouseX() >= que[nomer_voprosa].ans[0].x1 and
-            txMouseX() <= que[nomer_voprosa].ans[0].x2 and
-            txMouseButtons() & 1
-        )
+        for (int nomer = 0; nomer < que[nomer_voprosa].count_answers; nomer++)
         {
-            nomer_voprosa = nomer_voprosa + 1;
-            txSleep(1000);
+            if (
+                txMouseX() >= que[nomer_voprosa].ans[nomer].x1 and
+                txMouseX() <= que[nomer_voprosa].ans[nomer].x2 and
+                txMouseY() >= que[nomer_voprosa].ans[nomer].y1 and
+                txMouseY() <= que[nomer_voprosa].ans[nomer].y2 and
+                txMouseButtons() & 1
+            )
+            {
+                nomer_voprosa = nomer_voprosa + 1;
+                txSleep(1000);
+            }
         }
 
         txSleep(3);
