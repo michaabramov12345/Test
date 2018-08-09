@@ -18,6 +18,7 @@ void drawAnswer(Answer ans)
 struct Question
 {
     const char* text;
+    int count_answers;
     Answer ans1;
     Answer ans2;
     Answer ans3;
@@ -28,9 +29,19 @@ void drawQuestion(Question que)
     txSetFillColor(TX_RED);
     txRectangle(100, 0, 800, 100);
     txDrawText(100, 0, 800, 100, que.text);
-    drawAnswer(que.ans1);
-    drawAnswer(que.ans2);
-    drawAnswer(que.ans3);
+
+    if (que.count_answers >= 1)
+    {
+        drawAnswer(que.ans1);
+    }
+    if (que.count_answers >= 2)
+    {
+        drawAnswer(que.ans2);
+    }
+    if (que.count_answers >= 3)
+    {
+        drawAnswer(que.ans3);
+    }
 }
 
 int main()
@@ -40,7 +51,16 @@ int main()
     //Текст вопроса
     txSetFillColor(TX_BLACK);
     txClear();
+    Question que0 = {"Это невопрос",
+        0
+    };
+    drawQuestion(que0);
+    txSleep(3000);
+
+    txSetFillColor(TX_BLACK);
+    txClear();
     Question que1 = {"Это вопрос",
+        3,
         {100, 250, 300, 350, "Это ответ1"},
         {600, 250, 800, 350, "Это ответ2"},
         {400, 350, 600, 450, "Это ответ3"}
@@ -51,6 +71,7 @@ int main()
     txSetFillColor(TX_BLACK);
     txClear();
     Question que2 = {"Это вопрос2",
+        2,
         {100, 250, 300, 350, "Это ответ1"},
         {600, 250, 800, 350, "Это ответ2"}
     };
