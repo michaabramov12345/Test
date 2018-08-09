@@ -38,35 +38,35 @@ int main()
 {
     txCreateWindow(900, 600);
 
-    //“екст вопроса
-    txSetFillColor(TX_BLACK);
-    txClear();
-    Question que0 = {"Ёто невопрос",
+    Question que[100];
+    int count_questions = 3;
+
+    //«аполн€ем вопросы
+    que[0] = {"Ёто невопрос",
         0
     };
-    drawQuestion(que0);
-    txSleep(3000);
-
-    txSetFillColor(TX_BLACK);
-    txClear();
-    Question que1 = {"Ёто вопрос",
+    que[1] = {"Ёто вопрос",
         3,
         {{100, 250, 300, 350, "Ёто ответ1"},
          {600, 250, 800, 350, "Ёто ответ2"},
          {400, 350, 600, 450, "Ёто ответ3"}}
     };
-    drawQuestion(que1);
-    txSleep(3000);
-
-    txSetFillColor(TX_BLACK);
-    txClear();
-    Question que2 = {"Ёто вопрос2",
+    que[2] = {"Ёто вопрос2",
         2,
         {{100, 250, 300, 350, "Ёто ответ1"},
          {600, 250, 800, 350, "Ёто ответ2"}}
     };
-    drawQuestion(que2);
-    txSleep(3000);
+
+
+
+    //–исуем вопросы
+    for (int nomer = 0; nomer < count_questions; nomer++)
+    {
+        txSetFillColor(TX_BLACK);
+        txClear();
+        drawQuestion(que[nomer]);
+        txSleep(3000);
+    }
 
     return 0;
 }
