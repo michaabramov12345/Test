@@ -19,9 +19,7 @@ struct Question
 {
     const char* text;
     int count_answers;
-    Answer ans1;
-    Answer ans2;
-    Answer ans3;
+    Answer ans[100];
 };
 
 void drawQuestion(Question que)
@@ -30,17 +28,17 @@ void drawQuestion(Question que)
     txRectangle(100, 0, 800, 100);
     txDrawText(100, 0, 800, 100, que.text);
 
-    if (que.count_answers >= 1)
+    if (que.count_answers > 0)
     {
-        drawAnswer(que.ans1);
+        drawAnswer(que.ans[0]);
     }
-    if (que.count_answers >= 2)
+    if (que.count_answers > 1)
     {
-        drawAnswer(que.ans2);
+        drawAnswer(que.ans[1]);
     }
-    if (que.count_answers >= 3)
+    if (que.count_answers > 2)
     {
-        drawAnswer(que.ans3);
+        drawAnswer(que.ans[2]);
     }
 }
 
@@ -61,9 +59,9 @@ int main()
     txClear();
     Question que1 = {"Это вопрос",
         3,
-        {100, 250, 300, 350, "Это ответ1"},
-        {600, 250, 800, 350, "Это ответ2"},
-        {400, 350, 600, 450, "Это ответ3"}
+        {{100, 250, 300, 350, "Это ответ1"},
+         {600, 250, 800, 350, "Это ответ2"},
+         {400, 350, 600, 450, "Это ответ3"}}
     };
     drawQuestion(que1);
     txSleep(3000);
@@ -72,8 +70,8 @@ int main()
     txClear();
     Question que2 = {"Это вопрос2",
         2,
-        {100, 250, 300, 350, "Это ответ1"},
-        {600, 250, 800, 350, "Это ответ2"}
+        {{100, 250, 300, 350, "Это ответ1"},
+         {600, 250, 800, 350, "Это ответ2"}}
     };
     drawQuestion(que2);
     txSleep(3000);
