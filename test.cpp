@@ -69,19 +69,23 @@ int main()
         txClear();
         drawQuestion(que[nomer_voprosa]);
 
-        for (int nomer = 0; nomer < que[nomer_voprosa].count_answers; nomer++)
+        if (GetAsyncKeyState('A'))
         {
-            if (
-                txMouseX() >= que[nomer_voprosa].ans[nomer].x1 and
-                txMouseX() <= que[nomer_voprosa].ans[nomer].x2 and
-                txMouseY() >= que[nomer_voprosa].ans[nomer].y1 and
-                txMouseY() <= que[nomer_voprosa].ans[nomer].y2 and
-                txMouseButtons() & 1
-            )
-            {
-                nomer_voprosa = nomer_voprosa + 1;
-                txSleep(1000);
-            }
+            txSetFillColor(TX_YELLOW);
+            txFloodFill(que[nomer_voprosa].ans[0].x1 + 10,
+                        que[nomer_voprosa].ans[0].y1 + 10);
+            txSleep(10);
+            nomer_voprosa = nomer_voprosa + 1;
+            txSleep(1000);
+        }
+        if (GetAsyncKeyState('D'))
+        {
+            txSetFillColor(TX_YELLOW);
+            txFloodFill(que[nomer_voprosa].ans[1].x1 + 10,
+                        que[nomer_voprosa].ans[1].y1 + 10);
+            txSleep(10);
+            nomer_voprosa = nomer_voprosa + 1;
+            txSleep(1000);
         }
 
         txSleep(3);
