@@ -43,7 +43,8 @@ int main()
 
     //Заполняем вопросы
     que[0] = {"Это невопрос",
-        0
+        1,
+        {{100, 250, 300, 350, "Это ответ1"}}
     };
     que[1] = {"Это вопрос",
         3,
@@ -62,15 +63,27 @@ int main()
     //Рисуем вопросы
     int nomer_voprosa = 0;
     while (nomer_voprosa < count_questions)
-    //for (int nomer = 0; nomer < count_questions; nomer++)
     {
+        txBegin();
         txSetFillColor(TX_BLACK);
         txClear();
         drawQuestion(que[nomer_voprosa]);
-        //Нельзя просто так взять
-        //и увеличить номер вопроса
-        txSleep(3000);
-        nomer_voprosa = nomer_voprosa + 1;
+
+        //Человечек
+        txCircle(txMouseX(), txMouseY(), 12);
+
+        if (
+            txMouseX() >= que[nomer_voprosa].ans[0].x1 and
+            txMouseX() <= que[nomer_voprosa].ans[0].x2 and
+            txMouseButtons() & 1
+        )
+        {
+            nomer_voprosa = nomer_voprosa + 1;
+            txSleep(1000);
+        }
+
+        txSleep(3);
+        txEnd();
     }
 
     return 0;
