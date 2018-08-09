@@ -60,12 +60,17 @@ int main()
 
 
     //Рисуем вопросы
-    for (int nomer = 0; nomer < count_questions; nomer++)
+    int nomer_voprosa = 0;
+    while (nomer_voprosa < count_questions)
+    //for (int nomer = 0; nomer < count_questions; nomer++)
     {
         txSetFillColor(TX_BLACK);
         txClear();
-        drawQuestion(que[nomer]);
+        drawQuestion(que[nomer_voprosa]);
+        //Нельзя просто так взять
+        //и увеличить номер вопроса
         txSleep(3000);
+        nomer_voprosa = nomer_voprosa + 1;
     }
 
     return 0;
