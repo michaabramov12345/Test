@@ -8,11 +8,16 @@ struct Answer
     int y2;
     const char* text;
     bool pravilnyi;
+    HDC pic;
 };
 
 void drawAnswer(Answer ans)
 {
     txRectangle(ans.x1, ans.y1, ans.x2, ans.y2);
+    if (ans.pic != nullptr)
+    {
+        txBitBlt (txDC(), ans.x1, ans.y1, ans.x2 - ans.x1, ans.y2 - ans.y1, ans.pic, 130, 150);
+    }
     txDrawText(ans.x1, ans.y1, ans.x2, ans.y2, ans.text);
 }
 
@@ -41,31 +46,45 @@ int main()
 
     Question que[100];
     int count_questions = 3;
-
     int kolichestvo_pravilnyh = 0;
     char stroka_dlya_kolichestvo_pravilnyh[100];
 
-    //Заполняем вопросы
+
+    //Заполняем вопросы нормально
     {
     que[0] = {"Выберите число",
-        2,
-        {{100, 250, 300, 350, "1", true},
+        0,
+        {{100, 250, 300, 350, "1", true, txLoadImage("Бузова.bmp")},
          {600, 250, 800, 350, "Курица", false}}
     };
     que[1] = {"Это невопрос. Все ответы правильные",
-        3,
-        {{100, 250, 300, 350, "Это ответ1", true},
+        0,
+        {{100, 250, 300, 350, "Это ответ1", true, que[0].ans[0].pic},
          {600, 250, 800, 350, "Это ответ2", true},
-         {400, 350, 600, 450, "Это ответ3", true}}
+         {200, 350, 400, 450, "Это ответ3", true}}
     };
     que[2] = {"Выберите число",
-        3,
+        0,
         {{100, 250, 300, 350, "2", true},
          {600, 250, 800, 350, "Вася", false},
+         {600, 400, 800, 500, "Вася", false},
          {400, 350, 600, 450, "15", true}}
     };
     }
 
+
+    //Считаем количество ответов
+    for (int nomer = 0; nomer < count_questions; nomer++)
+    {
+        for (int otvet = 0; otvet < 100; otvet++)
+        {
+            if (que[nomer].ans[otvet].text == nullptr)
+            {
+                que[nomer].count_answers = otvet;
+                break;
+            }
+        }
+    }
 
     //Рисуем вопросы
     int nomer_voprosa = 0;
