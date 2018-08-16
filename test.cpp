@@ -2,13 +2,15 @@
 
 struct Answer
 {
+    //Обязательные
+    const char* text;
+    bool pravilnyi;
+    //Необязательные
+    HDC pic;
     int x1;
     int y1;
     int x2;
     int y2;
-    const char* text;
-    bool pravilnyi;
-    HDC pic;
 };
 
 void drawAnswer(Answer ans)
@@ -23,9 +25,11 @@ void drawAnswer(Answer ans)
 
 struct Question
 {
+    //Обязательные
     const char* text;
-    int count_answers;
     Answer ans[100];
+    //Необязательные
+    int count_answers;
 };
 
 void drawQuestion(Question que)
@@ -45,33 +49,33 @@ int main()
     txCreateWindow(900, 500);
 
     Question que[100];
-    int count_questions = 3;
+    int count_questions = 0;
     int kolichestvo_pravilnyh = 0;
     char stroka_dlya_kolichestvo_pravilnyh[100];
 
-
     //Заполняем вопросы нормально
     {
-    que[0] = {"Выберите число",
-        0,
-        {{100, 250, 300, 350, "1", true, txLoadImage("Бузова.bmp")},
-         {600, 250, 800, 350, "Курица", false},
-         {600, 250, 800, 350, "g", false},
-         {600, 250, 800, 350, "456", false},
-         {600, 250, 800, 350, "dfg", false}}
+    que[count_questions++] = {"Выберите число",
+        {{"1", true, txLoadImage("Бузова.bmp")},
+         {"Курица", false},
+         {"g", false},
+         {"456", false},
+         {"dfg", false}}
     };
-    que[1] = {"Это невопрос. Все ответы правильные",
-        0,
-        {{100, 250, 300, 350, "Это ответ1", true, que[0].ans[0].pic},
-         {600, 250, 800, 350, "Это ответ2", true},
-         {200, 350, 400, 450, "Это ответ3", true}}
+    que[count_questions++] = {"Это невопрос. Все ответы правильные",
+        {{"Это ответ1", true, que[0].ans[0].pic},
+         {"Это ответ2", true},
+         {"Это ответ3", true}}
     };
-    que[2] = {"Выберите число",
-        0,
-        {{100, 250, 300, 350, "2", true},
-         {600, 250, 800, 350, "Вася", false},
-         {600, 400, 800, 500, "Вася", false},
-         {400, 350, 600, 450, "15", true}}
+    que[count_questions++] = {"Выберите число",
+        {{"2", true},
+         {"Вася", false},
+         {"Вася", false},
+         {"15", true}}
+    };
+    que[count_questions++] = {"Выберите число",
+        {{"2", true},
+         {"15", true}}
     };
     }
 
