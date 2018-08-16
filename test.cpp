@@ -7,6 +7,7 @@ struct Answer
     int x2;
     int y2;
     const char* text;
+    bool pravilnyi;
 };
 
 void drawAnswer(Answer ans)
@@ -41,23 +42,29 @@ int main()
     Question que[100];
     int count_questions = 3;
 
-    //Заполняем вопросы
-    que[0] = {"Это невопрос",
-        1,
-        {{100, 250, 300, 350, "Это ответ1"}}
-    };
-    que[1] = {"Это вопрос",
-        3,
-        {{100, 250, 300, 350, "Это ответ1"},
-         {600, 250, 800, 350, "Это ответ2"},
-         {400, 350, 600, 450, "Это ответ3"}}
-    };
-    que[2] = {"Это вопрос2",
-        2,
-        {{100, 250, 300, 350, "Это ответ1"},
-         {600, 250, 800, 350, "Это ответ2"}}
-    };
+    int kolichestvo_pravilnyh = 0;
+    char stroka_dlya_kolichestvo_pravilnyh[100];
 
+    //Заполняем вопросы
+    {
+    que[0] = {"Выберите число",
+        2,
+        {{100, 250, 300, 350, "1", true},
+         {600, 250, 800, 350, "Курица", false}}
+    };
+    que[1] = {"Это невопрос. Все ответы правильные",
+        3,
+        {{100, 250, 300, 350, "Это ответ1", true},
+         {600, 250, 800, 350, "Это ответ2", true},
+         {400, 350, 600, 450, "Это ответ3", true}}
+    };
+    que[2] = {"Выберите число",
+        3,
+        {{100, 250, 300, 350, "2", true},
+         {600, 250, 800, 350, "Вася", false},
+         {400, 350, 600, 450, "15", true}}
+    };
+    }
 
 
     //Рисуем вопросы
@@ -69,23 +76,60 @@ int main()
         txClear();
         drawQuestion(que[nomer_voprosa]);
 
+        sprintf(stroka_dlya_kolichestvo_pravilnyh,
+            "Количество правильных ответов %d из %d",
+            kolichestvo_pravilnyh,
+            nomer_voprosa);
+        txTextOut(30, 100, stroka_dlya_kolichestvo_pravilnyh);
+
         for (int nomer = 0; nomer < que[nomer_voprosa].count_answers; nomer++)
         {
             if (
                 txMouseX() >= que[nomer_voprosa].ans[nomer].x1 and
                 txMouseX() <= que[nomer_voprosa].ans[nomer].x2 and
                 txMouseY() >= que[nomer_voprosa].ans[nomer].y1 and
-                txMouseY() <= que[nomer_voprosa].ans[nomer].y2 and
-                txMouseButtons() & 1
+                txMouseY() <= que[nomer_voprosa].ans[nomer].y2
             )
             {
-                nomer_voprosa = nomer_voprosa + 1;
-                txSleep(1000);
+                txSetFillColor(TX_YELLOW);
+                txFloodFill(que[nomer_voprosa].ans[nomer].x1 + 10,
+                            que[nomer_voprosa].ans[nomer].y1 + 10);
+                txSleep(10);
+
+                if (txMouseButtons() & 1)
+                {
+                    if (que[nomer_voprosa].ans[nomer].pravilnyi)
+                    {
+                        kolichestvo_pravilnyh = kolichestvo_pravilnyh + 1;
+                    }
+                    nomer_voprosa = nomer_voprosa + 1;
+                    txSleep(1000);
+                }
             }
         }
 
         txSleep(3);
         txEnd();
+    }
+
+    //Результат
+    {
+    txSetFillColor(TX_BLACK);
+    txClear();
+    sprintf(stroka_dlya_kolichestvo_pravilnyh,
+        "Количество правильных ответов %d из %d",
+        kolichestvo_pravilnyh,
+        nomer_voprosa);
+    txTextOut(30, 100, stroka_dlya_kolichestvo_pravilnyh);
+
+    if ((100 * kolichestvo_pravilnyh) / nomer_voprosa > 80)
+    {
+        txTextOut(30, 400, "Вы гений");
+    }
+    else
+    {
+        txTextOut(30, 400, "Вы идиот");
+    }
     }
 
     return 0;
