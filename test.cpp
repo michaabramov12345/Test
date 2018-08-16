@@ -42,7 +42,7 @@ void drawQuestion(Question que)
 
 int main()
 {
-    txCreateWindow(900, 600);
+    txCreateWindow(900, 500);
 
     Question que[100];
     int count_questions = 3;
@@ -55,7 +55,10 @@ int main()
     que[0] = {"Выберите число",
         0,
         {{100, 250, 300, 350, "1", true, txLoadImage("Бузова.bmp")},
-         {600, 250, 800, 350, "Курица", false}}
+         {600, 250, 800, 350, "Курица", false},
+         {600, 250, 800, 350, "g", false},
+         {600, 250, 800, 350, "456", false},
+         {600, 250, 800, 350, "dfg", false}}
     };
     que[1] = {"Это невопрос. Все ответы правильные",
         0,
@@ -73,7 +76,7 @@ int main()
     }
 
 
-    //Считаем количество ответов
+    //Считаем количество ответов и расставляем их
     for (int nomer = 0; nomer < count_questions; nomer++)
     {
         for (int otvet = 0; otvet < 100; otvet++)
@@ -83,6 +86,18 @@ int main()
                 que[nomer].count_answers = otvet;
                 break;
             }
+        }
+
+        for (int otvet = 0; otvet < que[nomer].count_answers; otvet++)
+        {
+            //900 - ширина экрана
+            int shirina_otveta = 900 / que[nomer].count_answers;
+
+            que[nomer].ans[otvet].x1 = 10 + otvet * shirina_otveta;
+            que[nomer].ans[otvet].x2 = que[nomer].ans[otvet].x1 + shirina_otveta - 20;
+
+            que[nomer].ans[otvet].y1 = 300;
+            que[nomer].ans[otvet].y2 = 400;
         }
     }
 
