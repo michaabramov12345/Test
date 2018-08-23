@@ -8,18 +8,7 @@ using namespace std;
 
 int main()
 {
-    char vysota_str[50];                    // буфер промежуточного хранения считываемого из файла текста
-    ifstream setting_file("Настройки.txt"); // открыли файл для чтения
-
-    if (setting_file.is_open())             // если файл открыт
-    {
-        setting_file.getline(vysota_str, 50); // считали строку из файла
-        setting_file.close();               // закрываем файл
-    }
-
-    int width = atoi(vysota_str);
-
-    txCreateWindow(900, width);
+    txCreateWindow(900, 600);
 
     Question que[100];
     int count_questions = 0;
@@ -27,16 +16,46 @@ int main()
     char stroka_dlya_kolichestvo_pravilnyh[100];
 
     //Заполняем вопросы нормально
+
+    char stroka_iz_faila[100];                          // буфер промежуточного хранения считываемого из файла текста
+    ifstream question_file;                             // открыли файл для чтения
+    question_file.open("Вопросы.txt");
+
+    while (question_file.good())                        // если файл открыт
     {
+        question_file.getline(stroka_iz_faila, 100);    // считали строку из файла
+
+        //Если stroka_iz_faila == Vopros
+        if (strcmp(stroka_iz_faila, "Vopros") == 0)
+        {
+            question_file.getline(stroka_iz_faila, 100);    // считали строку из файла
+
+            //ПРиходится заводить переменную, чтобы тексты вопросов были уникальными
+            char* text = new char[100];
+            strcpy(text, stroka_iz_faila);
+
+            que[count_questions++] = {text,
+                {{"1", true},
+                {"2", false}
+                }
+            };
+        }
+
+    }
+
+    question_file.close();                          // закрываем файл
+
+
+    /*{
     que[count_questions++] = {"Выберите число",
-        {{"1", true, txLoadImage("Бузова.bmp")},
+        {{"1", true},
          {"Курица", false},
          {"g", false},
          {"456", false},
          {"dfg", false}}
     };
     que[count_questions++] = {"Это невопрос. Все ответы правильные",
-        {{"Это ответ1", true, que[0].ans[0].pic},
+        {{"Это ответ1", true},
          {"Это ответ2", true},
          {"Это ответ3", true}}
     };
@@ -50,7 +69,7 @@ int main()
         {{"2", true},
          {"15", true}}
     };
-    }
+    }   */
 
 
     //Считаем количество ответов и расставляем их
@@ -133,14 +152,14 @@ int main()
         nomer_voprosa);
     txTextOut(30, 100, stroka_dlya_kolichestvo_pravilnyh);
 
-    if ((100 * kolichestvo_pravilnyh) / nomer_voprosa > 80)
+    /*if ((100 * kolichestvo_pravilnyh) / nomer_voprosa > 80)
     {
         txTextOut(30, 400, "Вы гений");
     }
     else
     {
         txTextOut(30, 400, "Вы идиот");
-    }
+    }    */
     }
 
     return 0;

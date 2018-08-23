@@ -1,0 +1,27 @@
+﻿
+Vopros
+Vyberite chislo
+Answers
+1
+true
+Chicken
+jgg
+Answers end
+Vopros
+Это невопрос. Все ответы правильные
+Answers
+Это ответ1
+true
+Это ответ2
+true
+Это ответ3
+true
+Answers end
+Vopros
+Vyberite chislo
+Answers
+2
+true
+15
+true
+Answers end
