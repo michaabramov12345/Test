@@ -28,17 +28,50 @@ int main()
         //Если stroka_iz_faila == Vopros
         if (strcmp(stroka_iz_faila, "Vopros") == 0)
         {
-            question_file.getline(stroka_iz_faila, 100);    // считали строку из файла
+            question_file.getline(stroka_iz_faila, 100);    // считали текст вопроса
 
             //ПРиходится заводить переменную, чтобы тексты вопросов были уникальными
-            char* text = new char[100];
-            strcpy(text, stroka_iz_faila);
+            char* text_voprosa = new char[100];
+            strcpy(text_voprosa, stroka_iz_faila);
 
-            que[count_questions++] = {text,
-                {{"1", true},
-                {"2", false}
+            //Записываем текст вопроса
+            que[count_questions] = {text_voprosa};
+
+
+            question_file.getline(stroka_iz_faila, 100);    // считали слово "Answers"
+
+            if (strcmp(stroka_iz_faila, "Answers") == 0)
+            {
+                int nomer_otveta = 0;
+                while (1)
+                {
+                    question_file.getline(stroka_iz_faila, 100);    // считали текст ответа
+
+                    //ПРиходится заводить переменную, чтобы тексты вопросов были уникальными
+                    char* text_otveta = new char[100];
+                    strcpy(text_otveta, stroka_iz_faila);
+
+                    if (strcmp(stroka_iz_faila, "Answers end") == 0)
+                    {
+                        break;
+                    }
+
+
+                    question_file.getline(stroka_iz_faila, 100);    // считали правильность ответа
+                    bool pravilnyi = (strcmp(stroka_iz_faila, "true") == 0);
+
+                    if (strcmp(stroka_iz_faila, "Answers end") == 0)
+                    {
+                        break;
+                    }
+
+                    que[count_questions].ans[nomer_otveta] = {text_otveta, pravilnyi};
+
+                    nomer_otveta++;
                 }
-            };
+            }
+
+            count_questions++;
         }
 
     }
@@ -152,14 +185,14 @@ int main()
         nomer_voprosa);
     txTextOut(30, 100, stroka_dlya_kolichestvo_pravilnyh);
 
-    /*if ((100 * kolichestvo_pravilnyh) / nomer_voprosa > 80)
+    if ((100 * kolichestvo_pravilnyh) / nomer_voprosa > 80)
     {
         txTextOut(30, 400, "Вы гений");
     }
     else
     {
         txTextOut(30, 400, "Вы идиот");
-    }    */
+    }
     }
 
     return 0;
