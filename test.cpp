@@ -1,4 +1,5 @@
 #include "TXLib.h"
+#include <locale.h>
 
 #include "answer.cpp"
 #include <fstream>
@@ -8,6 +9,8 @@ using namespace std;
 
 int main()
 {
+    setlocale (LC_ALL,"Rus");
+    setlocale(LC_CTYPE, "");
     txCreateWindow(900, 600);
 
     Question que[100];
@@ -71,6 +74,7 @@ int main()
                 }
             }
 
+            //Считаем количество вопросов
             count_questions++;
         }
 
@@ -79,35 +83,12 @@ int main()
     question_file.close();                          // закрываем файл
 
 
-    /*{
-    que[count_questions++] = {"Выберите число",
-        {{"1", true},
-         {"Курица", false},
-         {"g", false},
-         {"456", false},
-         {"dfg", false}}
-    };
-    que[count_questions++] = {"Это невопрос. Все ответы правильные",
-        {{"Это ответ1", true},
-         {"Это ответ2", true},
-         {"Это ответ3", true}}
-    };
-    que[count_questions++] = {"Выберите число",
-        {{"2", true},
-         {"Вася", false},
-         {"Вася", false},
-         {"15", true}}
-    };
-    que[count_questions++] = {"Выберите число",
-        {{"2", true},
-         {"15", true}}
-    };
-    }   */
 
 
     //Считаем количество ответов и расставляем их
     for (int nomer = 0; nomer < count_questions; nomer++)
     {
+        //КОличество ответов
         for (int otvet = 0; otvet < 100; otvet++)
         {
             if (que[nomer].ans[otvet].text == nullptr)
@@ -117,16 +98,17 @@ int main()
             }
         }
 
-        for (int otvet = 0; otvet < que[nomer].count_answers; otvet++)
+        //ширина и расстановка
+        for (int nomer_otvet = 0; nomer_otvet < que[nomer_otvet].count_answers; nomer_otvet++)
         {
             //900 - ширина экрана
             int shirina_otveta = 900 / que[nomer].count_answers;
 
-            que[nomer].ans[otvet].x1 = 10 + otvet * shirina_otveta;
-            que[nomer].ans[otvet].x2 = que[nomer].ans[otvet].x1 + shirina_otveta - 20;
+            que[nomer].ans[nomer_otvet].x1 = 10 + nomer_otvet * shirina_otveta;
+            que[nomer].ans[nomer_otvet].x2 = que[nomer].ans[nomer_otvet].x1 + shirina_otveta - 20;
 
-            que[nomer].ans[otvet].y1 = 300;
-            que[nomer].ans[otvet].y2 = 400;
+            que[nomer].ans[nomer_otvet].y1 = 300;
+            que[nomer].ans[nomer_otvet].y2 = 400;
         }
     }
 
@@ -161,10 +143,13 @@ int main()
 
                 if (txMouseButtons() & 1)
                 {
+                    //Считаем количество правильных ответов
                     if (que[nomer_voprosa].ans[nomer].pravilnyi)
                     {
                         kolichestvo_pravilnyh = kolichestvo_pravilnyh + 1;
                     }
+
+                    //номер текущего вопроса
                     nomer_voprosa = nomer_voprosa + 1;
                     txSleep(1000);
                 }
